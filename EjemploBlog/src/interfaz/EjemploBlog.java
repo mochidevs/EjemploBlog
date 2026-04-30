@@ -287,6 +287,21 @@ public class EjemploBlog {
             System.out.println("3. Regresar");
             System.out.print("Opción >> ");
         	
+            try {
+            	opcion = Integer.parseInt(scan.nextLine());
+            } catch (NumberFormatException e) {
+            	System.out.println("Ingrese un número válido.");
+            	opcion = 0;
+            }
+            
+            switch (opcion) {
+            case 1 -> agregarComentario();
+            case 2 -> borrarComentario();
+            case 3 -> System.out.println("Regresando...");
+            default -> System.out.println("Opción no válida.");
+        }
+            
+            
         } while (opcion != 3);
         
 	}
