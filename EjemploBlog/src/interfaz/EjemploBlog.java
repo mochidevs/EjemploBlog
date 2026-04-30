@@ -230,11 +230,7 @@ public class EjemploBlog {
 	}
 	
 	
-	
-	
-	
-	
-	
+	//elige una publicacion actual
 	public static void menuPublicaciones() {
 		//lista publicaciones de blog actual
 		Map<Integer, String> publicaciones;
@@ -250,8 +246,49 @@ public class EjemploBlog {
             return;
         }
         
-        //FALTA seguir -------------------------------------------
+        //imprime uno a uno
+        System.out.println("\n--- Publicaciones disponibles ---");
+        for (Map.Entry<Integer, String> entrada : publicaciones.entrySet()) {
+            System.out.println(entrada.getKey() + ". " + entrada.getValue());
+        }
 		
+        System.out.print("Seleccione el número de la publicación: ");
+        try {
+            publicacionActual = Integer.parseInt(scan.nextLine());
+            if (!publicaciones.containsKey(publicacionActual)) {
+                System.out.println("Número de publicación no válido.");
+                publicacionActual = -1;
+                return;
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Ingrese un número válido.");
+            return;
+        }
+        
+        //menú de la publicación que elige
+        int opcion = 0;
+        do {
+        	//publicación con comentarios
+        	try {
+        		String contenido = controladora.obtenerPublicacion(blogActual, publicacionActual);
+                System.out.println("\n----------------------------------------");
+                System.out.println(contenido);
+                System.out.println("----------------------------------------");
+        		
+        	} catch (Exception e) {
+        		System.out.println("Error: " + e.getMessage());
+        		return;
+        	}
+        	
+        	//opciones
+        	System.out.println("Opciones:");
+            System.out.println("1. Crear comentario");
+            System.out.println("2. Borrar comentario");
+            System.out.println("3. Regresar");
+            System.out.print("Opción >> ");
+        	
+        } while (opcion != 3);
+        
 	}
 	
 	private static void agregarComentario() {
@@ -294,14 +331,29 @@ public class EjemploBlog {
         }
 	}
 	
+	//lista con código y nombre
 	private static void mostrarListaBlogs() {
-		
+		Map<Integer, String> blogs = controladora.obtenerBlogs();
+		if (blogs.isEmpty()) {
+            System.out.println("No hay blogs registrados.");
+        } else {
+            System.out.println("\n--- Blogs disponibles ---");
+            for (Map.Entry<Integer, String> entrada : blogs.entrySet()) {
+                System.out.println(entrada.getKey() + ". " + entrada.getValue());
+            }
+        }
 	}
 	
 	public static void main(String[] args) {
+		
 		controladora = new Controladora();
 		
-;	}
-	
-	
+		try {
+			datosIniciales();
+		} catch (Exception e) {
+            System.out.println("Error cargando datos iniciales: " + e.getMessage());
+		}	
+		
+		menuPrincipal();
+	}
 }
