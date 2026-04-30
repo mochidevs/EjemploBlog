@@ -57,7 +57,17 @@ public class Controladora {
 	
 	//COMENTARIO
 	
+	public void agregarComentario(int codigoBlog, int codigoPublicacion, String email, String ip, String texto) throws Exception {
+		revisarBlogExistente(codigoBlog);
+		Blog b = blogs.get(codigoBlog);
+		b.agregarComentario(codigoPublicacion, email, ip, texto);
+	}
 	
+	public void borrarComentario(int codigoBlog, int codigoPublicacion, int posicion) throws Exception {
+		revisarBlogExistente(codigoBlog);
+		Blog b = blogs.get(codigoBlog);
+		b.borrarComentario(codigoPublicacion, posicion);
+	}
 	
 	
 	//verificar el código con método parecido al de publicacion
